@@ -17,6 +17,12 @@ namespace DeliverableTwo
         {
             userRecommendation = "If you want an activity for "; 
         }
+
+        public string GetUserInput(string message)
+        {
+            Console.Write(message);
+            return Console.ReadLine();
+        }
         
         public void PrintHeader()
         {
@@ -39,19 +45,19 @@ namespace DeliverableTwo
         public bool SetRecommendedActivity(string atype)
         {          
 
-            if (activity_action == atype)
+            if (atype.StartsWith(activity_action, StringComparison.OrdinalIgnoreCase))
             {
                 userRecommendation += "action, go stock car racing.";
             }
-            else if (activity_chill == atype)
+            else if (atype.StartsWith(activity_chill, StringComparison.OrdinalIgnoreCase))
             {
                 userRecommendation += "chill, go hiking.";
             }
-            else if (activity_danger == atype)
+            else if (atype.StartsWith(activity_danger, StringComparison.OrdinalIgnoreCase))
             {
                 userRecommendation += "danger, go skydiving.";
             }
-            else if (activity_good_food == atype)
+            else if (atype.StartsWith(activity_good_food, StringComparison.OrdinalIgnoreCase))
             {
                 userRecommendation += "good food, go to Taco Bell.";
             }
@@ -64,27 +70,23 @@ namespace DeliverableTwo
             return true;
         }
 
+        public int ParseUserInputAsInteger(string message)
+        {
+            if (Int32.TryParse(GetUserInput(message), out int result))
+            {
+                return result;
+            }
+            else
+            {
+                return ParseUserInputAsInteger("Error! Try again: ");
+            }
+        }
+
         /*Fuction accepts user string and returns true if the string is an integer greater than and equal zero, 
          *  otherwise false.
              */
-        public bool GetRecommendedTransport(string amountOfCompanion)
-        {
-            int amount = 0;
-
-            try
-            {
-                //checks if amountOfcompanion is an integer and if so, assign the value to amount
-                //if not print an error message and return false
-                if (!Int32.TryParse(amountOfCompanion, out amount))
-                {
-                    DisplayInvalidCompanionAmount();
-                    return false;
-                }
-
-                /*formated the recommendation to have the correct subject verb agreement based on the number of persons 
-                        joining the user */
-                
-
+        public bool GetRecommendedTransport(int amount)
+        { 
                 //checks if amount greater than or equal to zero
                 //if not display an error message and return false
                 if (amount >= 0)
@@ -118,11 +120,6 @@ namespace DeliverableTwo
                 }
 
                 return true;
-            }
-            catch {
-                DisplayInvalidCompanionAmount();
-                return false;
-            }
             
         }
         

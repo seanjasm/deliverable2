@@ -11,8 +11,7 @@ namespace DeliverableTwo
 
             travelPan.PrintHeader();
 
-            Console.Write("Hello! What is your name?  ");
-            user = Console.ReadLine();
+            user = travelPan.GetUserInput("Hello! What is your name?  ");
 
             try
             {
@@ -24,25 +23,23 @@ namespace DeliverableTwo
                         travelPan.PrintHeader();
                         travelPan.DisplayActivity();
 
-                        Console.Write("Hello {0}! What are you in the mood for?  ", user);
                         
-                    } while (!travelPan.SetRecommendedActivity(Console.ReadLine().ToUpper()));/* Do while the user input is invalid
+                    } while (!travelPan.SetRecommendedActivity(travelPan.GetUserInput($"Hello {user}! What are " +
+                    $"you in the mood for? ")));/* Do while the user input is invalid
                         Sends uppercase user input. */
 
-                    do
-                    {
-                        Console.Write("\n\n\nHow many persons are you joining you?  ");
+                    travelPan.GetRecommendedTransport(travelPan.ParseUserInputAsInteger("How many persons are" +
+                    " you joining you ? "));
 
-                    } while (!travelPan.GetRecommendedTransport(Console.ReadLine()));/*Do while user input is invalid */
-                                       
+
                     travelPan.PrintHeader();
-                    Console.WriteLine("\n\n\n Thank you {0}, here's our recommendation:\n\n {1}", user, travelPan.ToString());
+                    Console.WriteLine($"\n\n\n Thank you {user}, here's our recommendation:\n\n {travelPan.ToString()}");
 
-                    Console.Write("\n\n\nDo you want to continue?[N]:  ");
+                    Console.Write("\n\n\n");
 
-                } while (Console.ReadLine().ToLower() == "y"); 
+                } while (travelPan.GetUserInput("Do you want to continue?[N]: ").StartsWith("y", StringComparison.OrdinalIgnoreCase)); 
 
-                Console.WriteLine("\n\n\nGoodbye {0} and thanks for stopping by! Press Enter to close window.", user);
+                Console.WriteLine($"\n\n\nGoodbye {user} and thanks for stopping by! Press Enter to close window.");
                 Console.ReadLine();
 
             }
